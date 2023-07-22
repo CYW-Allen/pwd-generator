@@ -1,0 +1,16 @@
+{
+  "name": "pwd_generator",
+  "version": "1.0.0",
+  "description": "A app for generating random password",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "Allen Chen",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.0"
+  }
+}
