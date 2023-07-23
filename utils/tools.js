@@ -7,6 +7,7 @@ const ASCII_LOWER_END = 122;
 const ASCII_CHAR_START = 33;
 const ASCII_CHAR_END = 126;
 const PATTERN_LIST = ['number', 'uppercase', 'lowercase', 'symbols'];
+let filterChars = null;
 
 class CharAsciiTable {
   number = getNumberList(ASCII_NUM_START, ASCII_NUM_END);
@@ -40,31 +41,45 @@ function throwInputErr(msg) {
   throw err;
 }
 
+function sanitizeFilterChars(excludeChars, patternList) {
+  return Array.from(new Set(excludeChars.replace(/\s/g, '').split(''))).filter((c) => {
+    const charCode = c.charCodeAt(0);
+    for (let i = 0; i < patternList.length; i++) {
+      if (charAscii[patternList[i]].includes(charCode)) return true;
+    }
+    return false;
+  })
+}
+
 exports.examInput = (input) => {
   const { pwdLen, patterns, excludeChars } = input;
 
   if (!pwdLen || !Number(pwdLen) || pwdLen < 4 || pwdLen > 16) throwInputErr('Invaild password');
   if (!patterns) throwInputErr('At least one pattern is required');
   if (typeof patterns !== 'string' && !(patterns instanceof Array)) throwInputErr('Invaild patterns');
+  
   const patternList = typeof patterns === 'string' ? [patterns] : patterns;
   for (let i = 0; i < patternList.length; i++) {
     if (!PATTERN_LIST.includes(patternList[i])) throwInputErr('Invaild value in patterns');
   }
+  
   if (excludeChars && typeof excludeChars !== 'string') throwInputErr('Invaild excludeChars');
   if (excludeChars) {
-    const filterLen = Array.from(new Set(excludeChars.replace(/\s/g, '').split(''))).length;
+    filterChars = sanitizeFilterChars(excludeChars, patternList);
     const charPatternLen = patternList.reduce((sum, pattern) => {
       sum += charAscii[pattern].length;
       return sum;
     }, 0);
-    if (filterLen >= charPatternLen) throwInputErr('Exclude chars contain all the required patterns');
+    if (filterChars.length >= charPatternLen) {
+      filterChars = null;
+      throwInputErr('Exclude chars contain all the required patterns');
+    }
   }
 }
 
 exports.generateRandomPwd = (condition) => {
-  const { pwdLen, patterns, excludeChars } = condition;
+  const { pwdLen, patterns } = condition;
   const patternList = typeof patterns === 'string' ? [patterns] : patterns;
-  const charFilter = excludeChars ? Array.from(new Set(excludeChars.replace(/\s/g, '').split(''))) : null;
   const password = [];
   let counter = 0;
 
@@ -72,10 +87,12 @@ exports.generateRandomPwd = (condition) => {
     const curKind = patternList[getRandomNum(patternList.length)];
     const randomChar = charAscii.pickupRandomOne(curKind);
 
-    if (charFilter && charFilter.includes(randomChar)) continue;
+    if (filterChars && filterChars.includes(randomChar)) continue;
     password.push(randomChar);
     counter++;
   }
+
+  filterChars = null;
   return password.join('');
 }
 

@@ -1,0 +1,37 @@
+* {
+  font-family: Microsoft JhengHei;
+}
+
+header {
+  background-color: #6a757e;
+}
+
+.app {
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+}
+
+.formCard {
+  width: 90%;
+  height: 100%;
+}
+
+.cardHead,
+.cardCont {
+  width: 97%;
+}
+
+.cardHead {
+  border-bottom: 1px solid lightgrey;
+}
+
+.resultField {
+  color: #015864;
+  background-color: #caecf1;
+  border-radius: 5px;
+}
+
+.hide {
+  display: none;
+}
