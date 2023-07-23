@@ -2,7 +2,7 @@ const router = require('express').Router();
 const tools = require('../utils/tools');
 
 router.get('/', (_req, res) => {
-  res.render('index', { passResult: false });
+  res.render('index');
 });
 
 router.post('/password', (req, res, next) => {

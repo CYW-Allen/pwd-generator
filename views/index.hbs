@@ -115,7 +115,6 @@
     function clearConfig() {
       const inputElements = Array.from(document.querySelectorAll('#pwdForm input'));
       inputElements.forEach((ele) => {
-        console.log(ele.type)
         if (ele.type === 'text' || ele.type === 'number') ele.value = '';
         else ele.checked = false;
       })
