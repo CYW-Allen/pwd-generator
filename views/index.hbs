@@ -1,112 +1,134 @@
 <div class="card formCard m-auto">
-  <div class="cardHead mx-auto pt-4 pb-2">
-    <h4 class="fw-bold">Random Password Generator <i class="fas fa-key"></i></h4>
+    <div class="cardHead mx-auto pt-4 pb-2">
+      <h4 class="fw-bold">Random Password Generator <i class="fas fa-key"></i></h4>
+    </div>
+    <div class="card-body px-4">
+      <form class="d-flex flex-column" id="pwdForm" style="height:100%;" novalidate>
+        <div class="flex-fill row">
+          <label for="pwdLen" class="col-3 fs-5 fw-bold">Password Length</label>
+          <div class="col-9">
+            <input type="number" class="form-control" name="pwdLen" id="pwdLen" min="4" max="16" required>
+            <small>Length is available between 4 ~ 16</small>
+          </div>
+        </div>
+        <div class="flex-fill row">
+          <label for="lowercase" class="col-3 fs-5 fw-bold">
+            Include Lowercase Characters
+          </label>
+          <div class="col-9 fs-5 fw-bold">
+            <input type="checkbox" name="patterns" id="lowercase" value="lowercase">
+            <span class="ms-2">(e.g. abcdefg)</span>
+          </div>
+        </div>
+        <div class="flex-fill row">
+          <label for="uppercase" class="col-3 fs-5 fw-bold">
+            Include Uppercase Characters
+          </label>
+          <div class="col-9 fs-5 fw-bold">
+            <input type="checkbox" name="patterns" id="uppercase" value="uppercase">
+            <span class="ms-2">(e.g. ABCDEFG)</span>
+          </div>
+        </div>
+        <div class="flex-fill row">
+          <label for="number" class="col-3 fs-5 fw-bold">
+            Include Numbers
+          </label>
+          <div class="col-9 fs-5 fw-bold">
+            <input type="checkbox" name="patterns" id="number" value="number">
+            <span class="ms-2">(e.g. 123456)</span>
+          </div>
+        </div>
+        <div class="flex-fill row">
+          <label for="symbols" class="col-3 fs-5 fw-bold">
+            Include Symbols
+          </label>
+          <div class="col-9 fs-5 fw-bold">
+            <input type="checkbox" name="patterns" id="symbols" value="symbols">
+            <span class="ms-2">(e.g. @#$%)</span>
+          </div>
+        </div>
+        <div class="flex-fill row">
+          <label for="excludeChars" class="col-3 fs-5 fw-bold">Exclude Characters</label>
+          <div class="col-9">
+            <input type="text" class="form-control" name="excludeChars" id="excludeChars">
+            <small>These characters will not apper in the password</small>
+          </div>
+        </div>
+        <div class="resultField hide p-3 fs-5 fw-bold mb-3">
+          <span class="me-3">Your password is:</span>
+          <span id="result" style="color: #f6429d;"></span>
+        </div>
+        <div class="btn-group" role="group" >
+          <button class="btn btn-success" type="submit" id="sendReqBtn">Generate Password</button>
+          <button class="btn btn-secondary" type="button" onclick="clearConfig()" >Clear Config</button>
+          <button class="btn btn-primary" type="button" onclick="copyResult()">Copy Result</button>
+        </div>
+      </form>
+    </div>
+    <div class="card-footer text-end p-3">
+      idea is inspired by <span class="text-primary">Strong Random Password</span>
+    </div>
   </div>
-  <div class="card-body px-4">
-    <form class="d-flex flex-column" id="pwdForm" style="height:100%;" novalidate>
-      <div class="flex-fill row">
-        <label for="pwdLen" class="col-3 fs-5 fw-bold">Password Length</label>
-        <div class="col-9">
-          <input type="number" class="form-control" name="pwdLen" id="pwdLen" min="4" max="16" required>
-          <small>Length is available between 4 ~ 16</small>
-        </div>
-      </div>
-      <div class="flex-fill row">
-        <label for="lowercase" class="col-3 fs-5 fw-bold">
-          Include Lowercase Characters
-        </label>
-        <div class="col-9 fs-5 fw-bold">
-          <input type="checkbox" name="patterns" id="lowercase" value="lowercase">
-          <span class="ms-2">(e.g. abcdefg)</span>
-        </div>
-      </div>
-      <div class="flex-fill row">
-        <label for="uppercase" class="col-3 fs-5 fw-bold">
-          Include Uppercase Characters
-        </label>
-        <div class="col-9 fs-5 fw-bold">
-          <input type="checkbox" name="patterns" id="uppercase" value="uppercase">
-          <span class="ms-2">(e.g. ABCDEFG)</span>
-        </div>
-      </div>
-      <div class="flex-fill row">
-        <label for="number" class="col-3 fs-5 fw-bold">
-          Include Numbers
-        </label>
-        <div class="col-9 fs-5 fw-bold">
-          <input type="checkbox" name="patterns" id="number" value="number">
-          <span class="ms-2">(e.g. 123456)</span>
-        </div>
-      </div>
-      <div class="flex-fill row">
-        <label for="symbols" class="col-3 fs-5 fw-bold">
-          Include Symbols
-        </label>
-        <div class="col-9 fs-5 fw-bold">
-          <input type="checkbox" name="patterns" id="symbols" value="symbols">
-          <span class="ms-2">(e.g. @#$%)</span>
-        </div>
-      </div>
-      <div class="flex-fill row">
-        <label for="excludeChars" class="col-3 fs-5 fw-bold">Exclude Characters</label>
-        <div class="col-9">
-          <input type="text" class="form-control" name="excludeChars" id="excludeChars">
-          <small>These characters will not apper in the password</small>
-        </div>
-      </div>
-      <div class="resultField hide p-3 fs-5 fw-bold mb-3">
-        <span class="me-3">Your password is:</span>
-        <span id="result" style="color: #f6429d;"></span>
-      </div>
-      <div>
-        <button class="btn btn-success" type="submit" id="sendReqBtn">Generate Password</button>
-      </div>
-    </form>
-  </div>
-  <div class="card-footer text-end p-3">
-    idea is inspired by <span class="text-primary">Strong Random Password</span>
-  </div>
-</div>
-
-<script>
-  const pwdForm = document.getElementById('pwdForm');
-  const pwdLenEle = document.getElementById('pwdLen');
-  const patternEle = Array.from(document.querySelectorAll('input[type=checkbox]'));
-  const sendReqBtn = document.getElementById('sendReqBtn');
-  const resultField = document.querySelector('.resultField');
-  const resultEle = document.getElementById('result');
-
-  sendReqBtn.addEventListener('click', () => {
-    pwdForm.classList.add('was-validated');
-  });
-  pwdForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    if (!pwdLenEle.checkValidity()) {
-      resultEle.textContent = 'Enter one proper number for password length.';
-      resultField.classList.remove('hide');
-      return;
-    }
-
-    const patternEleChecked = patternEle.reduce((result, ele) => (result || ele.checked), false);
-    if (!patternEleChecked) {
-      resultEle.textContent = 'You must select at least one character set.';
-      resultField.classList.remove('hide');
-      return;
-    }
-
-    axios.post(`${window.location.href}password`, new FormData(event.target))
-      .then((res) => {
-        resultEle.textContent = res.data;
+  
+  <script>
+    const pwdForm = document.getElementById('pwdForm');
+    const pwdLenEle = document.getElementById('pwdLen');
+    const patternEle = Array.from(document.querySelectorAll('input[type=checkbox]'));
+    const sendReqBtn = document.getElementById('sendReqBtn');
+    const resultField = document.querySelector('.resultField');
+    const resultEle = document.getElementById('result');
+  
+    sendReqBtn.addEventListener('click', () => {
+      pwdForm.classList.add('was-validated');
+    });
+    pwdForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+  
+      if (!pwdLenEle.checkValidity()) {
+        resultEle.textContent = 'Enter one proper number for password length.';
         resultField.classList.remove('hide');
-      })
-      .catch((err) => {
-        resultEle.textContent = err.response.data;
+        return;
+      }
+  
+      const patternEleChecked = patternEle.reduce((result, ele) => (result || ele.checked), false);
+      if (!patternEleChecked) {
+        resultEle.textContent = 'You must select at least one character set.';
         resultField.classList.remove('hide');
+        return;
+      }
+  
+      axios.post(`${window.location.href}password`, new FormData(event.target))
+        .then((res) => {
+          resultEle.textContent = res.data;
+          resultField.classList.remove('hide');
+        })
+        .catch((err) => {
+          resultEle.textContent = err.response.data;
+          resultField.classList.remove('hide');
+        })
+        .finally(() => {
+          pwdForm.classList.remove('was-validated');
+        })
+    })
+  
+    function clearConfig() {
+      const inputElements = Array.from(document.querySelectorAll('#pwdForm input'));
+      inputElements.forEach((ele) => {
+        console.log(ele.type)
+        if (ele.type === 'text' || ele.type === 'number') ele.value = '';
+        else ele.checked = false;
       })
-      .finally(() => {
-        pwdForm.classList.remove('was-validated');
-      })
-  })
-</script>
+    }
+  
+    function copyResult() {
+      navigator.clipboard.writeText(resultEle.textContent)
+        .then(() => {
+          alert('The result is copied to the clipboard');
+        })
+        .catch((e) => {
+          alert('Fail to copy to the clipboard');
+          console.error(e);
+        });
+    }
+  </script>
